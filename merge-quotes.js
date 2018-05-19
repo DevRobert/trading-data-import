@@ -1,13 +1,11 @@
 const MongoClient = require('mongodb').MongoClient
-
-const databaseUrl = 'mongodb://localhost:27017'
-const databaseName = 'trading'
+const Config = require('./config')
 
 async function run() {
-    const client = await MongoClient.connect(databaseUrl)
+    const client = await MongoClient.connect(Config.databaseUrl)
 
     try {
-        const database = client.db(databaseName)
+        const database = client.db(Config.databaseName)
         const collection = database.collection('single-quotes')
 
         await collection.aggregate([

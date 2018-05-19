@@ -2,17 +2,15 @@ const { getStocks } = require('./lib/mysql_client')
 const { downloadStockData } = require('./lib/download_stock_data')
 
 const MongoClient = require('mongodb').MongoClient
-
-const databaseUrl = 'mongodb://localhost:27017'
-const databaseName = 'trading'
+const Config = require('./config')
 
 let run = async () => {
     const stocks = await getStocks()
 
-    const client = await MongoClient.connect(databaseUrl)
+    const client = await MongoClient.connect(Config.databaseUrl)
 
     try {
-        const database = client.db(databaseName)
+        const database = client.db(Config.databaseName)
         const collection = database.collection('single-quotes')
 
         console.log('Clearing quotes...')
